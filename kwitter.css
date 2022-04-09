@@ -53,3 +53,11 @@ body{
 	border-radius: 15px;
 	color: rgb(197, 27, 240);
 }
+.container{
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 60%;
+}
+#user_name{
+	width: 80%;
+}

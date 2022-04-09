@@ -11,10 +11,10 @@ const firebaseConfig = {
   };
   
   // Initialize Firebase
-   initializeApp(firebaseConfig);
+   firebase.initializeApp(firebaseConfig);
   
-   user_name=localStorage.getItem("user_name");
-   document.getElementById("user_name").innerHTML="Welcome "+user_name+" !";
+   //user_name=localStorage.getItem("user_name");
+   //document.getElementById("user_name").innerHTML="Welcome "+user_name+" !";
    
  function addRoom(){
     room_name=document.getElementById("room_name").value;
@@ -43,4 +43,24 @@ function send(){
     });
     document.getElementById("msg").innerHTML="";
 }
-  
+  function getData() { firebase.database().ref("/"+room_name).on('value', function(snapshot) { document.getElementById("output").innerHTML = ""; snapshot.forEach(function(childSnapshot) { childKey  = childSnapshot.key; childData = childSnapshot.val(); if(childKey != "purpose") {
+    firebase_message_id = childKey;
+    message_data = childData;
+  //Start code
+  console.log(firebase_message_id);
+  console.log(message_data);
+
+  username=message_data['name'];
+  message=message_data['message'];
+  like=message_data['like'];
+
+  name_with_tag="<h4>"+ username + "<img class= 'user_tick' src='tick.png' ></h4>";
+  message_with_tag="<h4 class='message_h4' >"+message+"</h4>";
+  like_button="<button class='btn btn-warning' id="+firebase_message_id+" value="+like+" onclick='updateLike(this.id)'>";
+  span_with_tag=" <span class='glyphicon glyphicon-thumbs-up' >Like "+ like +"</span></button><hr>";
+
+  row=name_with_tag+message_with_tag+like_button+span_with_tag;
+  document.getElementById("output").innerHTML+=row;
+  //End code
+  } });  }); }
+  getData(); 
