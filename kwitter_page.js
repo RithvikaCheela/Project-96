@@ -56,7 +56,7 @@ function send(){
 
   name_with_tag="<h4>"+ username + "<img class= 'user_tick' src='tick.png' ></h4>";
   message_with_tag="<h4 class='message_h4' >"+message+"</h4>";
-  like_button="<button class='btn btn-warning' id="+firebase_message_id+" value="+like+" onclick='updateLike(this.id)'>";
+  like_button="<button class='btn btn-warning' id="+firebase_message_id+" value="+ like +" onclick='updateLike(this.id)'>";
   span_with_tag=" <span class='glyphicon glyphicon-thumbs-up' >Like "+ like +"</span></button><hr>";
 
   row=name_with_tag+message_with_tag+like_button+span_with_tag;
@@ -64,3 +64,11 @@ function send(){
   //End code
   } });  }); }
   getData(); 
+  function updateLike(like_button){
+    console.log("clicked on the like button"+like_button);
+    button_id=like_button;
+    likes=document.getElementById("button_id").value;
+    updates_likes=Number(likes)+1;
+    console.log(updated_likes);
+firebase.database().ref(room_name).child(like_button).update({ like : updated_likes });
+  }
